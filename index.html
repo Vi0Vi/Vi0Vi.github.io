@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wei-Chien Chan - Academic & Research Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. Custom Specified Color Palette (Peaceful Blue, Brown, & Pink Theme)
+           ========================================================================== */
+        :root {
+            --bg-color: #e6ecee;           /* Pale grayish blue canvas */
+            --border-color: #c6d4d8;       /* Soft muted gray-blue for lines */
+            --text-muted: #8fa7b5;         /* Soft slate blue for extra metadata */
+            --accent-brown-light: #d2b08c; /* Warm tan/light brown accent */
+            --accent-brown-dark: #a38672;  /* Muted earth brown for alternative text */
+            
+            --dark-navy: #1d3156;          /* Deep navy for primary headings & nav */
+            --steel-blue: #496894;         /* Steel blue for readable body text */
+            --mid-blue: #a4b5d1;           /* Dusty blue for structural elements */
+            --ice-blue: #b0cbe6;           /* Soft light ice blue for cards/tags */
+            --pastel-pink: #fed6ce;        /* Soft pastel pink for delicate highlights */
+            
+            --content-bg: #ffffff;         /* Clean white card background */
+            --transition-speed: 0.3s;
+            --shadow-sm: 0 4px 12px rgba(29, 49, 86, 0.05);
+            --shadow-md: 0 10px 25px rgba(29, 49, 86, 0.08);
+            --radius-lg: 16px;
+            --radius-md: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--steel-blue);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Fluid Background Canvas */
+        #ambient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.65;
+        }
+
+        /* ==========================================================================
+           2. Navigation Bar
+           ========================================================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.1rem 8%;
+            background-color: rgba(29, 49, 86, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(29, 49, 86, 0.15);
+            z-index: 1000;
+            transition: all var(--transition-speed);
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--mid-blue);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all var(--transition-speed);
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--pastel-pink);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-links a.active {
+            color: var(--dark-navy);
+            background-color: var(--ice-blue);
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Mobile Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            z-index: 1010;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* ==========================================================================
+           3. Layout System
+           ========================================================================== */
+        main {
+            margin-top: 80px; 
+            flex-grow: 1;
+            display: flex;
+            padding: 3rem 8%;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .page-view {
+            display: none; 
+            width: 100%;
+            background: var(--content-bg);
+            padding: 3.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            animation: gentleFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .page-view.active-page {
+            display: block; 
+        }
+
+        @keyframes gentleFadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.75px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 75px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--pastel-pink), var(--accent-brown-light));
+            border-radius: 3px;
+        }
+
+        p {
+            color: var(--steel-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* ==========================================================================
+           4. Component Design Styles
+           ========================================================================== */
+        
+        .profile-subtitle {
+            font-size: 1.3rem;
+            color: var(--accent-brown-dark);
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Tags Palette */
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1.5rem 0 2rem 0;
+        }
+        
+        .tag {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tag-blue {
+            background-color: #e1edf8;
+            color: var(--dark-navy);
+            border: 1px solid var(--ice-blue);
+        }
+
+        .tag-brown {
+            background-color: #f7ede2;
+            color: #7d5e3f;
+            border: 1px solid var(--accent-brown-light);
+        }
+
+        .tag-pink {
+            background-color: #fff0ed;
+            color: #b35647;
+            border: 1px solid var(--pastel-pink);
+        }
+
+        /* Research Specific Layout Panel */
+        .research-panel {
+            background-color: var(--bg-color);
+            border-left: 5px solid var(--accent-brown-light);
+            padding: 1.75rem;
+            margin: 2rem 0;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .research-panel h4 {
+            color: var(--dark-navy);
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Simulated Video Player Styles */
+        .video-player-card {
+            background: #0f172a;
+            border-radius: var(--radius-md);
+            border: 1px solid #334155;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .video-player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 0.75rem;
+        }
+
+        .video-title {
+            color: #f1f5f9;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .video-pulse {
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            animation: pulse-glow 1.5s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(0.9); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .video-screen-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #020617;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #1e293b;
+        }
+
+        #simulation-video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            background-color: #000;
+        }
+
+        /* Overlay Play Button on Screen */
+        .video-overlay-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: rgba(29, 49, 86, 0.85);
+            border: 2px solid var(--pastel-pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .video-overlay-play:hover {
+            background: var(--dark-navy);
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 0 20px rgba(254, 214, 206, 0.4);
+        }
+
+        .video-overlay-play svg {
+            width: 28px;
+            height: 28px;
+            fill: #ffffff;
+            stroke: none;
+            margin-left: 4px;
+        }
+
+        .video-controls-panel {
+            background: #1e293b;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .video-progress-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .video-timeline-bg {
+            flex-grow: 1;
+            height: 6px;
+            background: #475569;
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .video-timeline-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--pastel-pink), var(--accent-brown-light));
+            border-radius: 3px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: width 0.1s linear;
+        }
+
+        .video-time-stamp {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            font-family: monospace;
+            white-space: nowrap;
+        }
+
+        .video-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-btn-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .control-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .sim-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .sim-stat-box {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            text-align: center;
+        }
+
+        .sim-stat-label {
+            display: block;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.15rem;
+        }
+
+        .sim-stat-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            font-family: monospace;
+        }
+
+        /* List Items (Honors & Extracurriculars cards) */
+        .item-card {
+            padding: 1.75rem;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            transition: all var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: transparent;
+            transition: background-color var(--transition-speed);
+        }
+
+        .item-card:hover {
+            border-color: var(--mid-blue);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        .item-card:hover::before {
+            background-color: var(--accent-brown-light);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .item-date {
+            font-size: 0.85rem;
+            color: var(--accent-brown-dark);
+            background-color: var(--pastel-pink);
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .item-card p {
+            margin-bottom: 0;
+            font-size: 0.98rem;
+            color: var(--steel-blue);
+        }
+
+        /* Resource Links for Portfolios/Slides */
+        .resource-link-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            background-color: var(--bg-color);
+            color: var(--dark-navy);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .resource-link:hover {
+            background-color: #ffffff;
+            border-color: var(--mid-blue);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-1px);
+        }
+
+        /* Image & Poster Placeholder Framework */
+        .photo-placeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .photo-placeholder {
+            border: 2px dashed var(--border-color);
+            background-color: #fafcfc;
+            border-radius: var(--radius-md);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            color: var(--steel-blue);
+            font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-height: 140px;
+            transition: all 0.2s;
+        }
+
+        .photo-placeholder:hover {
+            background-color: #ffffff;
+            border-color: var(--accent-brown-light);
+            color: var(--dark-navy);
+        }
+
+        .photo-placeholder svg {
+            color: var(--accent-brown-dark);
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Extracurricular Clickable Boxes System */
+        .activity-boxes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .activity-box {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .activity-box:hover {
+            border-color: var(--accent-brown-light);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .activity-box.active-box {
+            border-color: var(--dark-navy);
+            background-color: var(--dark-navy);
+            color: #ffffff;
+        }
+
+        .activity-box-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            transition: color var(--transition-speed);
+        }
+
+        .activity-box.active-box .activity-box-title {
+            color: #ffffff;
+        }
+
+        .activity-content {
+            display: none;
+            animation: gentleFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .activity-content.active-content {
+            display: block;
+        }
+
+        /* Quick Floating Actions / Bottom details */
+        .contact-footer {
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .contact-badge-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            color: var(--dark-navy);
+            background-color: var(--bg-color);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .contact-badge:hover {
+            background-color: #ffffff;
+            border-color: var(--mid-blue);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* SVG icon style consistency */
+        .icon {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ==========================================================================
+           5. Responsive adjustments
+           ========================================================================== */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: rgba(29, 49, 86, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding-top: 3rem;
+                gap: 1.5rem;
+                transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.mobile-open {
+                left: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 0.75rem 2rem;
+                width: 80%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.open span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+            }
+
+            .hamburger.open span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.open span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            main {
+                margin-top: 70px;
+                padding: 1.5rem 4%;
+            }
+
+            .page-view {
+                padding: 2rem 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .activity-boxes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Particle Stream (Ambient context background) -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <nav class="navbar">
+        <div class="logo-group">
+            <div class="logo">Wei-Chien Chan</div>
+        </div>
+        <button class="hamburger" id="menu-toggle" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="nav-menu">
+            <li>
+                <a class="nav-item active" data-target="about">
+                    <svg class="icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    About Me
+                </a>
+            </li>
+            <li>
+                <a class="nav-item" data-target="honors">
+                    <svg class="icon"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                    Honors & Awards
+                </a>
+            </li>
+            <li>
+                <a class="nav-item" data-target="activities">
+                    <svg class="icon"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Extracurriculars
+                </a>
+            </li>
+            <li>
+                <a class="nav-item" data-target="research">
+                    <svg class="icon"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    Project
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="page-container">
+
+            <!-- ==========================================
+                 SECTION: ABOUT ME
+                 ========================================== -->
+            <section id="about" class="page-view active-page">
+                <h2>About Me</h2>
+                
+                <p>Vivi is a high school junior interested in physics. Currently, she is working on an astrophysics project to investigate the growth of molecular hydrogen in the interstellar medium. In addition, she’s passionate about arts and cares about the environment around her.</p>
+                <p>Education: Taipei Wego Private High School</p>
+                <p>Graduation Year: 2027</p>
+
+                <!-- Footer Contact Handles -->
+                <div class="contact-footer">
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">
+                        2026
+                    </div>
+                    <div class="contact-badge-container">
+                        <a href="mailto:viwch.chan@gmail.com" class="contact-badge">
+                            <svg class="icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            viwch.chan@gmail.com
+                        </a>
+                        <a href="#" class="contact-badge" onclick="window.print(); return false;">
+                            <svg class="icon"><polygon points="6 9 6 2 18 2 18 9"></polygon><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                            Export Dossier (Print)
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 SECTION: HONORS & AWARDS
+                 ========================================== -->
+            <section id="honors" class="page-view">
+                <h2>Honors & Awards</h2>
+                <div style="margin-top: 2rem;"></div>
+                
+                <div class="item-card">
+                    <div class="item-header">
+                        <span class="item-title">Taiwan Young Physicists' Tournament - Silver Award</span>
+                        <span class="item-date">2026</span>
+                    </div>
+                    <p>I was the team captain and responsible for two problems: “Flipo Flip”, which investigates the rotation of a kinetic toy and “Magnetic Newton’s Cradle”, which investigates the movement of magnets in a coupled system.</p>
+                    <div class="resource-link-group">
+                        <a href="https://docs.google.com/presentation/d/1XgqwpAd5-VzJHw8yA3WrNNJjyNemzzcxzOlhhYRnbKE/edit?usp=sharing" target="_blank" class="resource-link">
+                            <svg class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                            View "Flipo Flip" Slides
+                        </a>
+                        <a href="https://docs.google.com/presentation/d/1-OX3WlBd_Fz2SO651-OGv3pCfM6iy9XjpNZvkTxAuqw/edit?usp=sharing" target="_blank" class="resource-link">
+                            <svg class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                            View "Magnetic Newton's Cradle" Slides
+                        </a>
+                    </div>
+                </div>
+
+                <div class="item-card">
+                    <div class="item-header">
+                        <span class="item-title">Taiwan Young Physicists' Tournament - Bronze Award</span>
+                        <span class="item-date">2025</span>
+                    </div>
+                    <p>I was responsible for the problem “dripping faucet”, which investigates how the dripping of water depends on the flowrate.</p>
+                    <div class="resource-link-group">
+                        <a href="https://docs.google.com/presentation/d/1VxL0SO28bBIvh2cGrw8g8I2F28E2JBf2yr3u63A0IH4/edit?usp=sharing" target="_blank" class="resource-link">
+                            <svg class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                            View "Dripping Faucet" Slides
+                        </a>
+                    </div>
+                </div>
+
+                <div class="item-card">
+                    <div class="item-header">
+                        <span class="item-title">National Geographic Competition: Environmental and Map Drawing Division - Bronze Awards</span>
+                        <span class="item-date">2023</span>
+                    </div>
+                    <p>My map focuses on the historical development of Beitou from pre-colonial to post-war period.</p>
+                    <div class="resource-link-group">
+                        <a href="#" target="_blank" class="resource-link">
+                            <svg class="icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            View Beitou Map
+                        </a>
+                    </div>
+                </div>
+
+                <div class="item-card">
+                    <div class="item-header">
+                        <span class="item-title">School Science Fair - First Place</span>
+                        <span class="item-date">2024</span>
+                    </div>
+                    <p>I investigated the relationship between the sound of pouring water and temperature.</p>
+                    <div class="resource-link-group">
+                        <a href="https://docs.google.com/presentation/d/1YUdUhubkBoYJUfG0dz50ViS7t_mJT6-A5UoCtNjW5DY/edit?usp=sharing" target="_blank" class="resource-link">
+                            <svg class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                            View "The Songs of Water" slides
+                        </a>
+                    </div>
+                </div>
+
+                <div class="item-card">
+                    <div class="item-header">
+                        <span class="item-title">International Youth Academic Elite Association Physics Bowl Challenge - Second Runner Up</span>
+                        <span class="item-date">2025</span>
+                    </div>
+                </div>
+
+                <div class="item-card">
+                    <div class="item-header">
+                        <span class="item-title">Vienna Piano Competition - Second Place</span>
+                        <span class="item-date">2025</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 SECTION: EXTRACURRICULARS (INTERACTIVE BOXES)
+                 ========================================== -->
+            <section id="activities" class="page-view">
+                <h2>Extracurricular Activities</h2>
+                <div style="margin-top: 1rem;"></div>
+        
+                <!-- Interactive Selection Grid -->
+                <div class="activity-boxes-grid">
+                    <div class="activity-box active-box" data-activity="academic">
+                        <span class="activity-box-title">Academic</span>
+                    </div>
+                    <div class="activity-box" data-activity="arts">
+                        <span class="activity-box-title">Arts</span>
+                    </div>
+                    <div class="activity-box" data-activity="volunteering">
+                        <span class="activity-box-title">Volunteer</span>
+                    </div>
+                </div>
+
+                <!-- DISPLAY PANEL: ACADEMIC -->
+                <div id="academic-activity" class="activity-content active-content">
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">National Taiwan University Physics Program</span>
+                            <span class="item-date">2025 - 2026</span>
+                        </div>
+                        <p>Qualified for this competitive program, learning freshman-level physics courses alongside top-performing peers.</p>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Stanford University Level Online Math and Physics Program</span>
+                            <span class="item-date">Aug 2025 - Dec 2025</span>
+                        </div>
+                        <p>Explored rigorous concepts in optics and thermodynamics, receiving an A grade with a final overall average of 91%.</p>
+                        
+                        <!-- Inline Certificate Mock Photo Box -->
+                        <div class="photo-placeholder-grid">
+                            <div class="photo-placeholder" style="max-width: 400px;">
+                                <svg class="icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                <span>Stanford Certification of Accomplishment</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">CAPRI Internship</span>
+                            <span class="item-date">Jul 2025 - Aug 2025</span>
+                        </div>
+                        <p>Wrote a detailed academic research paper examining Taiwan's green energy transition policy framework, presenting key findings directly to a panel of regional public policy experts.</p>
+                        <div class="resource-link-group">
+                            <a href="https://docs.google.com/document/d/1nO7CDPJN2ecC2ZtQ-5onjwSExeSA4qUQEhhaqixknJM/edit?usp=sharing" target="_blank" class="resource-link">
+                                <svg class="icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                View Green Energy Transition Paper
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DISPLAY PANEL: ARTS -->
+                <div id="arts-activity" class="activity-content">
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Dance</span>
+                            <span class="item-date">8 Years</span>
+                        </div>
+                        <p>Dedicated to structured dance practice over eight years, building physical coordination, artistic expression, and collaborative choreography skills.</p>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">English Drama Contest</span>
+                            <span class="item-date">2024</span>
+                        </div>
+                        <p>Served as the leader of the background design and logistics group, directing production mechanics, stage sets, and environmental visuals.</p>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Piano</span>
+                            <span class="item-date">9 Years</span>
+                        </div>
+                        <p>Pursued advanced classical piano training over nine years, developing musical interpretation, focus, and performance composure.</p>
+                    </div>
+                </div>
+
+                <!-- DISPLAY PANEL: VOLUNTEER -->
+                <div id="volunteering-activity" class="activity-content">
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Infinitas Online Tutoring</span>
+                            <span class="item-date">2023 - 2024</span>
+                        </div>
+                        <p>Tutor elementary school students in English for one hour per week, creating customized lesson plans to build conversational confidence and language foundations.</p>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Cocoa & Hearth Charity Club</span>
+                            <span class="item-date">2023 - 2026</span>
+                        </div>
+                        <p>Served as the Lead of the Creative Department. Designed and distributed over 10 custom promotional posters and social media outreach posts to market charity bake sales and hosted community activities at local senior centers.</p>
+                        
+                        <!-- 3 Photos Work Example Grid -->
+                        <div class="photo-placeholder-grid">
+                            <div class="photo-placeholder">
+                                <svg class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>Design Work Example 1</span>
+                            </div>
+                            <div class="photo-placeholder">
+                                <svg class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>Design Work Example 2</span>
+                            </div>
+                            <div class="photo-placeholder">
+                                <svg class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>Design Work Example 3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Tutoring Junior High School Students</span>
+                            <span class="item-date">2023 - 2026</span>
+                        </div>
+                        <p>Tutored more than 10 underclassmen in literature, physics, and mathematics for one hour per week, simplifying complex syllabus principles into approachable concepts.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 SECTION: RESEARCH PROJECT (ASTROPHYSICS SIMULATION VIDEO)
+                 ========================================== -->
+            <section id="research" class="page-view">
+                <h2>Project</h2>
+                
+                <div class="tag-container">
+                    <span class="tag tag-brown">
+                        <svg class="icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        Astrophysics
+                    </span>
+                    <span class="tag tag-pink">
+                        <svg class="icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        Interstellar Medium
+                    </span>
+                    <span class="tag tag-blue">
+                        <svg class="icon"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Fluid Mechanics Run
+                    </span>
+                </div>
+
+                <h3 style="color: var(--dark-navy); margin-bottom: 0.75rem; font-weight: 700;">Growth of Hydrogen in Interstellar Medium</h3>
+                <p>This project aims to investigate how the growth of dust (metals consisting of carbon, oxygen, and silicon) influences the growth of molecular hydrogen from ionic hydrogen in the interstellar medium (ISM). Molecular hydrogen is essential to the formation of early galaxies.</p>
+                
+                <div class="research-panel">
+                    <h4>
+                        <svg class="icon" style="color: var(--accent-brown-dark);"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        Key Finding & Methodology
+                    </h4>
+                    <p style="margin-bottom: 0; font-size: 0.98rem; color: var(--steel-blue);">By running fluid mechanics simulations on a supercomputer and comparing the outputs with analytical solutions, we can determine the critical role dust grain surfaces play in catalyzing molecular hydrogen synthesis.</p>
+                </div>
+
+                <!-- Simulation Video Player Card -->
+                <div class="video-player-card">
+                    <div class="video-player-header">
+                        <div class="video-title">
+                            <span class="video-pulse"></span>
+                            <span>Simulation Run Visualizer: H₂ Synthesis on ISM Dust</span>
+                        </div>
+                        <span style="font-size: 0.75rem; font-family: monospace; color: #64748b;">FLUID_SIM_V1.04</span>
+                    </div>
+
+                    <div class="video-screen-container" id="video-wrapper">
+                        <!-- Play Overlay (Only displays when video is paused/unstarted) -->
+                        <div class="video-overlay-play" id="big-play-btn">
+                            <svg class="icon"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        </div>
+                        
+                        <!-- Local Video Element (Substitute 'your_simulation.mp4' with actual video path) -->
+                        <video id="simulation-video" playsinline preload="metadata">
+                            <source src="your_simulation.mp4" type="video/mp4">
+                            Your browser does not support the video tag. Please rename your video file to 'your_simulation.mp4' and place it in the same directory.
+                        </video>
+                    </div>
+
+                    <!-- Player Controls -->
+                    <div class="video-controls-panel">
+                        <div class="video-progress-container">
+                            <button class="control-btn" id="play-pause-btn" aria-label="Play or Pause">
+                                <svg class="icon" id="play-icon" style="display: block;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                <svg class="icon" id="pause-icon" style="display: none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                            </button>
+                            
+                            <div class="video-timeline-bg" id="timeline-bar">
+                                <div class="video-timeline-fill" id="timeline-progress"></div>
+                            </div>
+
+                            <span class="video-time-stamp" id="time-display">00:00 / 00:00</span>
+                        </div>
+
+                        <div class="video-buttons">
+                            <div class="video-btn-left">
+                                <button class="control-btn" id="rewind-btn" title="Restart simulation run">
+                                    <svg class="icon"><polygon points="11 19 2 12 11 5 11 19"></polygon><polygon points="22 19 13 12 22 5 22 19"></polygon></svg>
+                                </button>
+                                <span style="font-size:0.75rem; color:#cbd5e1; font-weight:600;">Interstellar Cloud Temperature: <span style="color:var(--pastel-pink);">10 K</span></span>
+                            </div>
+                            <div>
+                                <button class="control-btn" id="speed-btn" title="Cycle Simulation Speed" style="font-size:0.75rem; font-weight:700; font-family:monospace; padding:0.25rem 0.5rem;">
+                                    1.0x
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // ==========================================
+        // 1. NAVIGATION CONTROL (Smooth Tab Switching)
+        // ==========================================
+        const navLinks = document.querySelectorAll('.nav-item');
+        const pages = document.querySelectorAll('.page-view');
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        // Handles page changes
+        function switchTab(targetId) {
+            navLinks.forEach(item => {
+                if (item.getAttribute('data-target') === targetId) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            pages.forEach(page => page.classList.remove('active-page'));
+            
+            const targetPage = document.getElementById(targetId);
+            if (targetPage) {
+                targetPage.classList.add('active-page');
+            }
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('data-target');
+                switchTab(targetId);
+
+                // Close mobile navigation on click
+                navMenu.classList.remove('mobile-open');
+                menuToggle.classList.remove('open');
+            });
+        });
+
+        // Hamburger mobile toggle behavior
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('open');
+            navMenu.classList.toggle('mobile-open');
+        });
+
+        // Close mobile drawer when clicking outside nav area
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                navMenu.classList.remove('mobile-open');
+                menuToggle.classList.remove('open');
+            }
+        });
+
+
+        // ==========================================
+        // 2. EXTRACURRICULAR BOXES SELECTION SYSTEM
+        // ==========================================
+        const actBoxes = document.querySelectorAll('.activity-box');
+        const actContents = document.querySelectorAll('.activity-content');
+
+        actBoxes.forEach(box => {
+            box.addEventListener('click', () => {
+                // Remove active styling on other cards
+                actBoxes.forEach(b => b.classList.remove('active-box'));
+                box.classList.add('active-box');
+
+                // Toggle visible content block
+                const selectedActivity = box.getAttribute('data-activity');
+                actContents.forEach(content => {
+                    if (content.id === `${selectedActivity}-activity`) {
+                        content.classList.add('active-content');
+                    } else {
+                        content.classList.remove('active-content');
+                    }
+                });
+            });
+        });
+
+
+        // ==========================================
+        // 3. REAL VIDEO PLAYER INTEGRATION & STATE MACHINE
+        // ==========================================
+        const video = document.getElementById('simulation-video');
+        const bigPlayBtn = document.getElementById('big-play-btn');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
+        const timelineBar = document.getElementById('timeline-bar');
+        const timelineProgress = document.getElementById('timeline-progress');
+        const timeDisplay = document.getElementById('time-display');
+        const rewindBtn = document.getElementById('rewind-btn');
+        const speedBtn = document.getElementById('speed-btn');
+
+        // Physics readouts
+        const statAtomic = document.getElementById('stat-atomic');
+        const statMolecular = document.getElementById('stat-molecular');
+        const statEfficiency = document.getElementById('stat-efficiency');
+        const totalBaseH = 120;
+
+        let simSpeed = 1.0;
+
+        // Helper to format video seconds to mm:ss
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "00:00";
+            let mins = Math.floor(seconds / 60);
+            let secs = Math.floor(seconds % 60);
+            return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Synchronize timeline readouts and simulation statistics
+        function updateVideoStatus() {
+            if (!video.duration) return;
+
+            const percentage = (video.currentTime / video.duration) * 100;
+            timelineProgress.style.width = `${percentage}%`;
+            timeDisplay.innerText = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+
+            // Dynamically model/calculate the atomic hydrogen conversion based on video timeline progression
+            const conversionRatio = video.currentTime / video.duration; // ranges from 0.0 to 1.0
+            const synthesizedMolecules = Math.floor((totalBaseH / 2) * conversionRatio);
+            const remainingAtoms = totalBaseH - (synthesizedMolecules * 2);
+            const efficiency = (synthesizedMolecules * 2) / totalBaseH * 100;
+
+            statAtomic.innerText = remainingAtoms;
+            statMolecular.innerText = synthesizedMolecules;
+            statEfficiency.innerText = `${efficiency.toFixed(1)}%`;
+        }
+
+        // Initialize display info on metadata load
+        video.addEventListener('loadedmetadata', () => {
+            timeDisplay.innerText = `00:00 / ${formatTime(video.duration)}`;
+        });
+
+        video.addEventListener('timeupdate', updateVideoStatus);
+
+        // Scrub timeline click events
+        timelineBar.addEventListener('click', (e) => {
+            if (!video.duration) return;
+            const rect = timelineBar.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const percent = clickX / rect.width;
+            video.currentTime = percent * video.duration;
+        });
+
+        // Play and Pause states
+        function togglePlay() {
+            if (video.paused) {
+                video.play();
+                bigPlayBtn.style.display = 'none';
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            } else {
+                video.pause();
+                bigPlayBtn.style.display = 'flex';
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            }
+        }
+
+        playPauseBtn.addEventListener('click', togglePlay);
+        bigPlayBtn.addEventListener('click', togglePlay);
+        video.addEventListener('click', togglePlay);
+
+        // Update overlay button on native playback state change
+        video.addEventListener('play', () => {
+            bigPlayBtn.style.display = 'none';
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+        });
+
+        video.addEventListener('pause', () => {
+            bigPlayBtn.style.display = 'flex';
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+        });
+
+        // Rewind to start
+        rewindBtn.addEventListener('click', () => {
+            video.currentTime = 0;
+            updateVideoStatus();
+        });
+
+        // Cycle through speeds: 1.0x -> 2.0x -> 4.0x -> 1.0x
+        speedBtn.addEventListener('click', () => {
+            if (simSpeed === 1.0) {
+                simSpeed = 2.0;
+                speedBtn.innerText = '2.0x';
+            } else if (simSpeed === 2.0) {
+                simSpeed = 4.0;
+                speedBtn.innerText = '4.0x';
+            } else {
+                simSpeed = 1.0;
+                speedBtn.innerText = '1.0x';
+            }
+            video.playbackRate = simSpeed;
+        });
+
+
+        // ==========================================
+        // 4. AMBIENT FLUID PARTICLES BACKGROUND (HTML Canvas)
+        // ==========================================
+        const canvas = document.getElementById('ambient-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const maxParticles = 65;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class FlowParticle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.6 + 0.2;
+                this.speedY = (Math.sin(this.x * 0.01) * 0.2);
+                this.alpha = Math.random() * 0.35 + 0.15;
+                this.type = Math.random() > 0.8 ? 1 : 0; 
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += Math.sin(this.x * 0.008) * 0.3;
+
+                // Loop seamlessly
+                if (this.x > canvas.width) {
+                    this.x = 0;
+                    this.y = Math.random() * canvas.height;
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                
+                if (this.type === 1) {
+                    ctx.fillStyle = `rgba(254, 214, 206, ${this.alpha * 1.5})`;
+                } else {
+                    ctx.fillStyle = `rgba(176, 203, 230, ${this.alpha})`;
+                }
+                
+                ctx.fill();
+            }
+        }
+
+        // Initialize particles
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < maxParticles; i++) {
+                particles.push(new FlowParticle());
+            }
+        }
+        initParticles();
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw flowing background current paths
+            ctx.strokeStyle = 'rgba(198, 212, 216, 0.25)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 4; i++) {
+                ctx.beginPath();
+                ctx.moveTo(0, canvas.height * (0.2 + i * 0.2));
+                ctx.bezierCurveTo(
+                    canvas.width * 0.3, canvas.height * (0.1 + i * 0.2),
+                    canvas.width * 0.7, canvas.height * (0.35 + i * 0.2),
+                    canvas.width, canvas.height * (0.2 + i * 0.2)
+                );
+                ctx.stroke();
+            }
+
+            // Draw particles on top of line paths
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Ensure window load begins the animation loop cleanly
+        window.onload = function() {
+            animate();
+        };
+
+    </script>
+</body>
+</html>
