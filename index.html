@@ -608,6 +608,7 @@
             justify-content: center;
             gap: 0.5rem;
             min-height: 140px;
+            text-decoration: none;
             transition: all 0.2s;
         }
 
@@ -615,6 +616,8 @@
             background-color: #ffffff;
             border-color: var(--accent-brown-light);
             color: var(--dark-navy);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
         }
 
         .photo-placeholder svg {
@@ -918,7 +921,7 @@
                     </div>
                     <p>My map focuses on the historical development of Beitou from pre-colonial to post-war period.</p>
                     <div class="resource-link-group">
-                        <a href="#" target="_blank" class="resource-link">
+                        <a href= "map.pdf" target="_blank" class="resource-link">
                             <svg class="icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                             View Beitou Map
                         </a>
@@ -991,13 +994,7 @@
                         </div>
                         <p>Explored rigorous concepts in optics and thermodynamics, receiving an A grade with a final overall average of 91%.</p>
                         
-                        <!-- Inline Certificate Mock Photo Box -->
-                        <div class="photo-placeholder-grid">
-                            <div class="photo-placeholder" style="max-width: 400px;">
-                                <svg class="icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                                <span>Stanford Certification of Accomplishment</span>
-                            </div>
-                        </div>
+                        
                     </div>
 
                     <div class="item-card">
@@ -1059,20 +1056,16 @@
                         </div>
                         <p>Served as the Lead of the Creative Department. Designed and distributed over 10 custom promotional posters and social media outreach posts to market charity bake sales and hosted community activities at local senior centers.</p>
                         
-                        <!-- 3 Photos Work Example Grid -->
+                        <!-- 2 Photos Work Example Grid -->
                         <div class="photo-placeholder-grid">
-                            <div class="photo-placeholder">
+                            <a href="image/poster.png" target="_blank" class="photo-placeholder">
                                 <svg class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                                <span>Design Work Example 1</span>
-                            </div>
-                            <div class="photo-placeholder">
+                                <span>Charity Poster (poster.png)</span>
+                            </a>
+                            <a href="image/Moon_Festival.png" target="_blank" class="photo-placeholder">
                                 <svg class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                                <span>Design Work Example 2</span>
-                            </div>
-                            <div class="photo-placeholder">
-                                <svg class="icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                                <span>Design Work Example 3</span>
-                            </div>
+                                <span>Moon Festival Poster (Moon_Festival.png)</span>
+                            </a>
                         </div>
                     </div>
 
@@ -1134,7 +1127,7 @@
                             <svg class="icon"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                         </div>
                         
-                        <!-- Local Video Element (Substitute 'your_simulation.mp4' with actual video path) -->
+                        <!-- Local Video Element -->
                         <video id="simulation-video" playsinline preload="metadata">
                             <source src="your_simulation.mp4" type="video/mp4">
                             Your browser does not support the video tag. Please rename your video file to 'your_simulation.mp4' and place it in the same directory.
@@ -1271,12 +1264,6 @@
         const rewindBtn = document.getElementById('rewind-btn');
         const speedBtn = document.getElementById('speed-btn');
 
-        // Physics readouts
-        const statAtomic = document.getElementById('stat-atomic');
-        const statMolecular = document.getElementById('stat-molecular');
-        const statEfficiency = document.getElementById('stat-efficiency');
-        const totalBaseH = 120;
-
         let simSpeed = 1.0;
 
         // Helper to format video seconds to mm:ss
@@ -1294,16 +1281,6 @@
             const percentage = (video.currentTime / video.duration) * 100;
             timelineProgress.style.width = `${percentage}%`;
             timeDisplay.innerText = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
-
-            // Dynamically model/calculate the atomic hydrogen conversion based on video timeline progression
-            const conversionRatio = video.currentTime / video.duration; // ranges from 0.0 to 1.0
-            const synthesizedMolecules = Math.floor((totalBaseH / 2) * conversionRatio);
-            const remainingAtoms = totalBaseH - (synthesizedMolecules * 2);
-            const efficiency = (synthesizedMolecules * 2) / totalBaseH * 100;
-
-            statAtomic.innerText = remainingAtoms;
-            statMolecular.innerText = synthesizedMolecules;
-            statEfficiency.innerText = `${efficiency.toFixed(1)}%`;
         }
 
         // Initialize display info on metadata load
