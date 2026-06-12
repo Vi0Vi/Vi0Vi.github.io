@@ -1111,58 +1111,7 @@
                     <p style="margin-bottom: 0; font-size: 0.98rem; color: var(--steel-blue);">By running fluid mechanics simulations on a supercomputer and comparing the outputs with analytical solutions, we can determine the critical role dust grain surfaces play in catalyzing molecular hydrogen synthesis.</p>
                 </div>
 
-                <!-- Simulation Video Player Card -->
-                <div class="video-player-card">
-                    <div class="video-player-header">
-                        <div class="video-title">
-                            <span class="video-pulse"></span>
-                            <span>Simulation Run Visualizer: H₂ Synthesis on ISM Dust</span>
-                        </div>
-                        <span style="font-size: 0.75rem; font-family: monospace; color: #64748b;">FLUID_SIM_V1.04</span>
-                    </div>
-
-                    <div class="video-screen-container" id="video-wrapper">
-                        <!-- Play Overlay (Only displays when video is paused/unstarted) -->
-                        <div class="video-overlay-play" id="big-play-btn">
-                            <svg class="icon"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                        </div>
-                        
-                        <!-- Local Video Element -->
-                        <video id="simulation_video" playsinline preload="metadata">
-                            <source src="image/Density_Video.mp4" type="video/mp4">
-                            Your browser does not support the video tag. Please rename your video file to 'your_simulation.mp4' and place it in the same directory.
-                        </video>
-                    </div>
-
-                    <!-- Player Controls -->
-                    <div class="video-controls-panel">
-                        <div class="video-progress-container">
-                            <button class="control-btn" id="play-pause-btn" aria-label="Play or Pause">
-                                <svg class="icon" id="play-icon" style="display: block;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                <svg class="icon" id="pause-icon" style="display: none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-                            </button>
-                            
-                            <div class="video-timeline-bg" id="timeline-bar">
-                                <div class="video-timeline-fill" id="timeline-progress"></div>
-                            </div>
-
-                            <span class="video-time-stamp" id="time-display">00:00 / 00:00</span>
-                        </div>
-
-                        <div class="video-buttons">
-                            <div class="video-btn-left">
-                                <button class="control-btn" id="rewind-btn" title="Restart simulation run">
-                                    <svg class="icon"><polygon points="11 19 2 12 11 5 11 19"></polygon><polygon points="22 19 13 12 22 5 22 19"></polygon></svg>
-                                </button>
-                                <span style="font-size:0.75rem; color:#cbd5e1; font-weight:600;">Interstellar Cloud Temperature: <span style="color:var(--pastel-pink);">10 K</span></span>
-                            </div>
-                            <div>
-                                <button class="control-btn" id="speed-btn" title="Cycle Simulation Speed" style="font-size:0.75rem; font-weight:700; font-family:monospace; padding:0.25rem 0.5rem;">
-                                    1.0x
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                
 
                     
                 </div>
